@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# This script will change the SSH listening port to ${SSH_PORT} on a new EC2 instance
+# and restart SSH to apply the new settings. Additionally, it opens that port
+# in the OS firewall if firewalld is running.
+
+# Update sshd_config to replace the default port (22) with 40422
+sed -i 's/#Port 22/Port ${SSH_PORT}/g' /etc/ssh/sshd_config
+sed -i 's/Port 22/Port ${SSH_PORT}/g' /etc/ssh/sshd_config
+
+# If firewalld is installed and running, open ${SSH_PORT} permanently:
+if command -v firewall-cmd >/dev/null 2>&1; then
+    firewall-cmd --permanent --add-port=${SSH_PORT}/tcp || true
+    firewall-cmd --reload || true
+fi
+
+# Restart the SSH service for changes to take effect.
+systemctl restart sshd
