@@ -12,4 +12,10 @@ terraform {
 provider "aws" {
   # Configuration options
   region = var.region
+  default_tags {
+    tags = {
+      Project = "EC2 Nonstandard SSH Port Example"
+      nukable = "true"
+    }
+  }
 }

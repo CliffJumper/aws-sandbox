@@ -27,9 +27,7 @@ resource "aws_security_group" "instance_ssh_custom_port_sg" {
   description = "Security Group allowing SSH on a non-standard port (not port 22)"
   vpc_id      = var.vpc_id
   tags = {
-    Name    = "instance_ssh_custom_port_sg"
-    nukable = "true"
-
+    Name = "instance_ssh_custom_port_sg"
   }
 }
 
@@ -61,8 +59,7 @@ resource "aws_instance" "bastion" {
   key_name                    = var.ec2_key_name
 
   tags = {
-    Name    = var.instance_name
-    nukable = true
+    Name = var.instance_name
   }
 
 }
